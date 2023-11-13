@@ -18,7 +18,7 @@ class Program
         Console.WriteLine(SumNum(40)); //sumNum(40) - test
 
 
-        // Wywolanie powyzszej funkcji dla liczb 2-100
+        // Wywolanie funkcji #IsPrime dla liczb 2-100
         for (int i = 2; i <= 100; i++)
         {
             if (IsPrime(i)) Console.WriteLine(i);
