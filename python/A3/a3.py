@@ -2,71 +2,73 @@ from samochod import Samochod
 from samochod import carType 
 from parking import Parking
 
-parking = Parking()
+#TODO check everything but should be fine
 
-samochod1 = Samochod("KR001O", "white", carType.CAR)
-samochod2 = Samochod("KR002O", "black", carType.CAR)
-samochod3 = Samochod("KR003C", "yellow", carType.TRUCK)
-samochod4 = Samochod("KR004C", "white", carType.TRUCK)
-samochod5 = Samochod("KR005J", "blue", carType.BIKE)
-samochod6 = Samochod("KR006J", "white", carType.BIKE)
+def dummyTest():
+    parking = Parking()
 
-# 1 
-samochod1.wjazd(parking)
+    samochod1 = Samochod("KR001O", "white", carType.CAR)
+    samochod2 = Samochod("KR002O", "black", carType.CAR)
+    samochod3 = Samochod("KR003C", "yellow", carType.TRUCK)
+    samochod4 = Samochod("KR004C", "white", carType.TRUCK)
+    samochod5 = Samochod("KR005J", "blue", carType.BIKE)
+    samochod6 = Samochod("KR006J", "white", carType.BIKE)
 
-# 2
-samochod2.wjazd(parking)
+    # 1 
+    samochod1.wjazd(parking)
 
-# 3
-samochod3.wjazd(parking)
+    # 2
+    samochod2.wjazd(parking)
 
-# 4
-samochod2.wyjazd(parking)
+    # 3
+    samochod3.wjazd(parking)
 
-# 5
-print(parking.freePlaces)
+    # 4
+    samochod2.wyjazd(parking)
 
-# 6
-samochod2.wjazd(parking)
+    # 5
+    print("Wolne miejsca: " + str(parking.freePlaces))
 
-# 7
-samochod4.wjazd(parking)
-print(parking.freePlaces)
+    # 6
+    samochod2.wjazd(parking)
 
-# 8
-print(samochod5.wjazd(parking))
-print(parking.freePlaces)
+    # 7
+    samochod4.wjazd(parking)
 
-# 9
-parking.printStatus()
+    # 8
+    samochod5.wjazd(parking)
 
-# 10
-if(samochod6.wjazd(parking) == -1): print("Parking pełny!")
+    # 9
+    parking.printStatus()
 
-# 11
-samochod1.wyjazd(parking)
-print(parking.freePlaces)
+    # 10
+    if(samochod6.wjazd(parking) == -1): print("Parking pełny!")
 
-# 12
-samochod6.wjazd(parking)
+    # 11
+    samochod1.wyjazd(parking)
 
-print(parking.freePlaces)
+    # 12
+    samochod6.wjazd(parking)
 
-# 13
-parking.printStatus()
+    # 13
+    parking.printStatus()
 
-# 14
+    # 14
+    for car in parking.getCurrentVeh().copy():
+        parking.wyjazd(car)
 
-for car in parking.getCurrentVeh().copy():
-    print(parking.wyjazd(car))
+    # 15
+    parking.printStatus()
 
-# 15
-parking.printStatus()
+    # 16
+    print("Lista wszystkich numerow rej:\n")
+    for car in parking.platesList:
+        print("Numer rej: " + car.licensePlate)
 
-# 16
-for car in parking.listaNumerow:
-    if(car.typ == carType.TRUCK):
-        print("Numer rej: " + car.numerRej)
+    # 17
+    print("Lista wszystkich numerow rej samochodow ciezarowych:\n")
+    for car in parking.platesList:
+        if(car.carType == carType.TRUCK):
+            print("Numer rej: " + car.licensePlate)
 
-
-#uzupelnic klase o wybrane rzeczy, pola, pola statyczne, metody cos w tym stluy xD
+dummyTest()

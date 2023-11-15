@@ -4,8 +4,8 @@ class Parking:
     def __init__(self):
         self.freePlaces = 5
         self.occupiedPlaces = 0;
-        self.utarg = 0;
-        self.listaNumerow = []
+        self.money = 0;
+        self.platesList = []
         self.currentVeh = []
     def getCurrentVeh(self):
         return self.currentVeh
@@ -15,30 +15,26 @@ class Parking:
 
         self.freePlaces+=1
         self.occupiedPlaces-=1
-        # self.listaNumerow.remove(samochod)
         self.currentVeh.remove(samochod)
 
-        match samochod.typ:
+        match samochod.carType:
             case(carType.CAR):
-                self.utarg+=10
+                self.money+=10
             case(carType.TRUCK):
-                self.utarg+=30
+                self.money+=30
             case(carType.BIKE):
-                self.utarg+=5
+                self.money+=5
 
     def wjazd(self, samochod):
-        #TODO check for double entry in listaNumerow
-        #TODO deny wjazd if already in, deny wyjazd if already out
         
-        if(self.freePlaces == 0): return -1
-        if(samochod in self.currentVeh): return -1
+        if(self.freePlaces == 0 or samochod in self.currentVeh): return -1
 
         self.freePlaces-=1
         self.occupiedPlaces+=1
-        self.listaNumerow.append(samochod)
+        if(samochod not in self.platesList): self.platesList.append(samochod)
         self.currentVeh.append(samochod)
     
     
     def printStatus(self):
-        print("Occupied places: " + str(self.occupiedPlaces))
-        print("Utarg: " + str(self.utarg))
+        print("Zajete miejsca: " + str(self.occupiedPlaces))
+        print("Utarg: " + str(self.money))

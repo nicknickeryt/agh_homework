@@ -3,14 +3,14 @@ from enum import Enum
 class carType(Enum):
     TRUCK = "ciezarowy"
     CAR = "osobowy"
-    BIKE = 'jednoslad'
+    BIKE = "jednoslad"
 
 
 class Samochod:
-    def __init__(self, numerRej, color, carType):
-        self.numerRej = numerRej
-        self.kolor = color;
-        self.typ = carType;
+    def __init__(self, licensePlate, color, carType):
+        self.licensePlate = licensePlate
+        self.color = color;
+        self.carType = carType;
         
     def wjazd(self, parking):
         return parking.wjazd(self)
@@ -18,6 +18,6 @@ class Samochod:
         return parking.wyjazd(self)
 
     def printInfo(self):
-        print(self.numerRej)
-        print(self.kolor)
-        print(self.typ.value)
+        print(self.licensePlate)
+        print(self.color)
+        print(self.carType.value)
