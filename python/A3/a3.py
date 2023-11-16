@@ -3,16 +3,23 @@ from samochod import carType
 from parking import Parking
 
 #TODO check everything but should be fine
+#######################
+# Funkcja testująca
+#  tworzy 6 obiektów i wykonuje kolejne kroki z instrukcji
+#######################
+
 
 def dummyTest():
     parking = Parking()
 
-    samochod1 = Samochod("KR001O", "white", carType.CAR)
-    samochod2 = Samochod("KR002O", "black", carType.CAR)
-    samochod3 = Samochod("KR003C", "yellow", carType.TRUCK)
-    samochod4 = Samochod("KR004C", "white", carType.TRUCK)
-    samochod5 = Samochod("KR005J", "blue", carType.BIKE)
-    samochod6 = Samochod("KR006J", "white", carType.BIKE)
+
+    # Tablice rejestracyjne mają na końcu pierwszą literę enumeratora typu samochodu dla ułatwienia debugowania
+    samochod1 = Samochod("KR001C", "white", carType.CAR)
+    samochod2 = Samochod("KR002C", "black", carType.CAR)
+    samochod3 = Samochod("KR003T", "yellow", carType.TRUCK)
+    samochod4 = Samochod("KR004T", "white", carType.TRUCK)
+    samochod5 = Samochod("KR005B", "blue", carType.BIKE)
+    samochod6 = Samochod("KR006B", "white", carType.BIKE)
 
     # 1 
     samochod1.wjazd(parking)
@@ -42,7 +49,7 @@ def dummyTest():
     parking.printStatus()
 
     # 10
-    if(samochod6.wjazd(parking) == -1): print("Parking pełny!")
+    if(samochod6.wjazd(parking) == -2): print("Samochód 6 » Parking pełny!")	         # Sprawdzenie czy jest kod błędu, -2 oznacza, że nie ma wolnych miejsc
 
     # 11
     samochod1.wyjazd(parking)
@@ -54,19 +61,20 @@ def dummyTest():
     parking.printStatus()
 
     # 14
-    for car in parking.getCurrentVeh().copy():
-        parking.wyjazd(car)
+    # Wyjazd wszystkich samochodów
+    for car in parking.getCurrentVeh().copy():  # Lista musi być skopiowana do nowej, gdyż jest modyfikowana w pętli przez funkcję parking.wyjazd()
+        car.wyjazd(parking)
 
     # 15
     parking.printStatus()
 
     # 16
-    print("Lista wszystkich numerow rej:\n")
+    print("\nLista wszystkich numerow rej:")
     for car in parking.platesList:
         print("Numer rej: " + car.licensePlate)
 
     # 17
-    print("Lista wszystkich numerow rej samochodow ciezarowych:\n")
+    print("\nLista wszystkich numerow rej samochodow ciezarowych:")
     for car in parking.platesList:
         if(car.carType == carType.TRUCK):
             print("Numer rej: " + car.licensePlate)

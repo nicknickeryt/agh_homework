@@ -7,11 +7,12 @@ class Parking:
         self.money = 0;
         self.platesList = []
         self.currentVeh = []
+        
     def getCurrentVeh(self):
         return self.currentVeh
 
     def wyjazd(self, samochod):
-        if(samochod not in self.currentVeh): return -1
+        if(samochod not in self.currentVeh): return -1        # Sprawdzenie, czy samochód jest na parkingu
 
         self.freePlaces+=1
         self.occupiedPlaces-=1
@@ -27,7 +28,8 @@ class Parking:
 
     def wjazd(self, samochod):
         
-        if(self.freePlaces == 0 or samochod in self.currentVeh): return -1
+        if self.freePlaces == 0: return -2                     # Sprawdzenie, czy są wolne miejsca
+        if samochod in self.currentVeh: return -1              # Sprawdzenie, czy samochód nie jest już na parkingu
 
         self.freePlaces-=1
         self.occupiedPlaces+=1

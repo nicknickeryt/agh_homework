@@ -1,5 +1,6 @@
 from enum import Enum
 
+# Enumerator typu pojazdu
 class carType(Enum):
     TRUCK = "ciezarowy"
     CAR = "osobowy"
