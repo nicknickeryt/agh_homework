@@ -2,7 +2,6 @@ from samochod import Samochod
 from samochod import carType 
 from parking import Parking
 
-#TODO check everything but should be fine
 #######################
 # Funkcja testująca
 #  tworzy 6 obiektów i wykonuje kolejne kroki z instrukcji
