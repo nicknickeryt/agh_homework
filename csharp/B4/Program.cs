@@ -1,26 +1,32 @@
-﻿//TODO Cleanup a bit
-//TODO check everything
-namespace B4;
+﻿namespace B4;
+ /*
+  * Główna część programu.
+  * Zawiera przykładowe dane i testuje klasy.
+  */
+class Program {
 
-class Program
-{
+    static void Main(string[] args) {
+        
+        /*
+         * Obiekt person przechowuje dane osobowe dla uproszczenia kodu.
+         * Każdy dokument danej osoby ma bowiem te same dane, jedyną zmienną jest data ważności
+         */
+        Person person = new Person {Name="Jan", Surname="Kowalski", EyeColor=EyeColor.BROWN};
 
-    static void Main(string[] args)
-    {
+        // Utworzenie porfela z danymi osobowymi/
+        Wallet wallet = new Wallet(person);
 
-        Wallet wallet = new Wallet();
+        // Ustawienie daty ważności dokumentów.
+        wallet.IdCard.ExpirationDate = 2030;
+        wallet.StudentIdCard.ExpirationDate = 2019;
 
-        wallet.Dowod.Imie = "Jan";
-        wallet.Dowod.Nazwisko = "Kowalski";
-        wallet.Dowod.SetEyeColor(EyeColor.BROWN);
-        wallet.Dowod.ExpirationDate = 2030;
-
-        wallet.Legitka.Imie = "Jan";
-        wallet.Legitka.Nazwisko = "Kowalski";
-        wallet.Legitka.SetEyeColor(EyeColor.BROWN);
-        wallet.Legitka.ExpirationDate = 2019;
-
-        wallet.CheckDate(2023);
+        // Kilka dat do przetestowania 
+        wallet.CheckDate(2023); // legitymacja wygasła
+        wallet.CheckDate(2019); // nic nie wygasło
+        wallet.CheckDate(2020); // legitymacja wygasła
+        wallet.CheckDate(2029); // legitymacja wygasła
+        wallet.CheckDate(2030); // legitymacja wygasła
+        wallet.CheckDate(2031); // wszystko wygasło
 
     }
 

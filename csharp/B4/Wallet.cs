@@ -1,25 +1,40 @@
-// Its ok ig
-class Wallet
-{
+namespace B4;
+class Wallet {
 
-    private Document dowod = new Document();
-    private Document legitka = new Document();
+    private Document idCard;
+    private Document studentIdCard;
 
-    public Document Dowod
-    {
-        get { return dowod; }
-        set { dowod = value; }
+    /*
+     * Inicjalizacja portfela z argumentem tworzy dwa dokumenty z podanymi danymi osobowymi
+     */ 
+    public Wallet(Person person) {  
+        idCard = new Document(person);
+        studentIdCard = new Document(person);
     }
 
-    public Document Legitka
-    {
-        get { return legitka; }
-        set { legitka = value; }
+    public Document IdCard {
+        get { return idCard; }
+        set { idCard = value; }
     }
 
-    public void CheckDate(int year)
-    {
-        if (year > dowod.ExpirationDate) Console.WriteLine("Dowod wygasl");
-        if (year > legitka.ExpirationDate) Console.WriteLine("Legitka wygasla");
+    public Document StudentIdCard {
+        get { return studentIdCard; }
+        set { studentIdCard = value; }
     }
+
+    // Spawdzanie, czy dokumenty wygasły
+    public void CheckDate(int year) {
+        
+        // Lista wiadomości do wypisania na koniec funkcji dla uproszczenia kodu.
+        List<string> strings = new List<string>() {"Status dokumentów na rok " + year + ":"};
+
+        if (year > idCard.ExpirationDate) strings.Add(" Dowod wygasl.");
+        if (year > studentIdCard.ExpirationDate) strings.Add(" Legitymacja wygasla.");
+        if(strings.Count == 1) strings.Add(" Wszystkie dokumenty są ważne.");
+
+        foreach (String s in strings) {
+            Console.WriteLine(s);
+        }
+    }
+
 }
