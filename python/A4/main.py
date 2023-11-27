@@ -25,7 +25,7 @@ def init():
 
         propsList = []
         for x in props:
-            propsList.append(int(input("\n<i> Podaj: " + x.value + "\n» ")))
+            propsList.append(float(input("\n<i> Podaj: " + x.value + "\n» ")))
 
         opsList = []
         j = 0
