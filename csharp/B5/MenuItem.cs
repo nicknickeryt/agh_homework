@@ -3,7 +3,7 @@ namespace B5 {
     class MenuItem {
 
         // Statyczna wartość wszystkich zamówionych potraw
-        public static double TotalOrder;
+        public static float TotalOrder;
 
         // Nazwa potrawy
         public string ItemName {
@@ -12,13 +12,13 @@ namespace B5 {
         }
 
         // Cena potrawy
-        public double Price {
+        public float Price {
             get;
             set;
         }
 
         // Konstruktor parametryczny tworzoący potrawę
-        public MenuItem(string itemName, double price) {
+        public MenuItem(string itemName, float price) {
             ItemName = itemName;
             Price = price;
             TotalOrder+=Price;

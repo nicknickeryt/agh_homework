@@ -5,8 +5,8 @@
         static void Main(string[] args){
 
             // Kilka obiektów do testów
-            MenuItem menuItem1 = new MenuItem("Zupa pomidorowa", 5.0);
-            MenuItem menuItem2 = new MenuItem("Krupnik", 4.0);
+            MenuItem menuItem1 = new MenuItem("Zupa pomidorowa", 5.0f);
+            MenuItem menuItem2 = new MenuItem("Krupnik", 4.0f);
             MenuItem copiedItem = new MenuItem(menuItem2);
 
             // Wypisanie łącznej wartości potraw
