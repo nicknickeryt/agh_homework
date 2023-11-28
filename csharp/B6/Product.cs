@@ -1,36 +1,48 @@
 namespace B6
 {
-    class Product {
-        
-        private int CurrentPrice;
+    class Product
+    {
+
+        public int CurrentPrice
+        {
+            get;
+            set;
+        }
 
         private int mass;
 
-        public string Name {
+        public string Name
+        {
             get;
         }
 
-        public int Mass {
+        public int Mass
+        {
             get { return mass; }
-            set {
+            set
+            {
                 if (value >= 0) mass = value;
             }
         }
 
-        public Product(string name) {
+        public Product(string name)
+        {
             Name = name;
             Mass = 0;
             CurrentPrice = WorldMarket.GetInitialPricePerKg();
         }
 
-        public Product(string name, int mass) {
+        public Product(string name, int mass)
+        {
             Name = name;
             Mass = mass;
             CurrentPrice = WorldMarket.GetInitialPricePerKg();
         }
 
-        public int getCurrentValue() {
-            return WorldMarket.GetNewPricePerKg(CurrentPrice)*Mass;
+        public int getCurrentValue()
+        {
+            CurrentPrice = WorldMarket.GetNewPricePerKg(CurrentPrice);
+            return CurrentPrice * Mass;
         }
 
     }

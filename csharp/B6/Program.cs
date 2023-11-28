@@ -1,11 +1,4 @@
-﻿using System;
-using System.Runtime.ExceptionServices;
-
-// TODO english
-// TODO fix print format
-// TODO fix czas podrozy and podroz za dluga not working
-
-namespace B6
+﻿namespace B6
 {
     class Program
     {
@@ -30,7 +23,7 @@ namespace B6
             mySubmarine.TravelOffer(ceuta, p1, p2);
             // ta oferta bedzie skladana do skutku
             bool accepted = false;
-            while (!accepted) 
+            while (!accepted)
             {
                 accepted = myShip.TravelOffer(aberdeen, p3, p4);
             }

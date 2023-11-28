@@ -1,59 +1,67 @@
 namespace B6
 {
-    class Ship {
+    class Ship
+    {
 
-        private static int defaultShipMass = 50;
+        private int defaultShipMass = 50;
+        private Engine defaultShipEngine = new Engine(Fuel.Diesel);
 
-        public Engine Engine{
+        public Engine Engine
+        {
             get;
             set;
         }
-        private int MasaStatku {
+        public int MasaStatku
+        {
             get;
             set;
         }
 
-        public Ship() {
-            Engine = new Engine(Fuel.Diesel);
+        public Ship()
+        {
+            Engine = defaultShipEngine;
             MasaStatku = defaultShipMass;
         }
 
-        public Ship(Engine engine, int masaStatku) {
+        public Ship(Engine engine, int masaStatku)
+        {
             MasaStatku = masaStatku;
-            if(masaStatku <=0){
-                Console.WriteLine("Masa statku musi być dodatnia! Ustawianie domyślnej.");
+            if (masaStatku <= 0)
+            {
+                Console.WriteLine("Ship mass must be positive! Setting the default one (" + defaultShipMass + ")");
                 MasaStatku = defaultShipMass;
-            } 
+            }
             Engine = engine;
         }
 
-        public bool TravelOffer(Destination destination, Product productOne, Product productTwo) {
-            int sellPrice = productOne.getCurrentValue() + productTwo.getCurrentValue();
-            int totalMass = productOne.Mass + productTwo.Mass;
+        public bool TravelOffer(Destination destination, Product p1, Product p2)
+        {
+            int sellPrice = p1.getCurrentValue() + p2.getCurrentValue();
+            int totalMass = p1.Mass + p2.Mass;
             int travelPrice = Engine.TravelCost(destination.Distance, totalMass);
 
-            bool oplacalne = sellPrice - travelPrice >= 1000 ? true : false;
+            bool isProfitable = sellPrice - travelPrice >= 1000 ? true : false;
 
-            if(oplacalne) {
-                Console.WriteLine("Oferta zaakceptowana!");
+            if (isProfitable)
+            {
+                Console.WriteLine("Destination accepted: " + destination.Name);
 
-                Console.WriteLine("Zawartość ładunku:");
-                Console.WriteLine(productOne.Name + ", " + productOne.Mass);
-                Console.WriteLine(productTwo.Name + ", " + productTwo.Mass);
+                Console.WriteLine("Transporting:");
+                Console.WriteLine(p1.Name + ", " + p1.Mass + " tons");
+                Console.WriteLine(p2.Name + ", " + p2.Mass + " tons");
 
-                Console.WriteLine("Czas podróży:");
-                Console.WriteLine(Engine.TravelTime(destination.Distance, totalMass));
+                Console.Write("Travel time: " + Engine.TravelTime(destination.Distance, totalMass) + " hours, ");
 
-                Console.WriteLine("Cena sprzedaży:");
-                Console.WriteLine(sellPrice);
+                Console.Write("total value: " + sellPrice + ", ");
 
-                Console.WriteLine("Koszty podróży:");
-                Console.WriteLine(travelPrice);
-            } else {
-                Console.WriteLine("Oferta zbyt droga!");
+                Console.WriteLine("travel cost: " + travelPrice + "\n");
+            }
+            else
+            {
+                Console.WriteLine("Travelling to " + destination.Name + " is too expensive\n");
             }
 
-            return oplacalne;
+            return isProfitable;
 
         }
     }

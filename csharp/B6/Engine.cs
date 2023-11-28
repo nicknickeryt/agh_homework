@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace B6
+﻿namespace B6
 {
 
-    public enum Fuel {
+    public enum Fuel
+    {
         Diesel,
         Hydrogen,
         Nuclear
     }
+
     class Engine
     {
         // klasa reprezentujaca silnik statku
@@ -28,7 +26,7 @@ namespace B6
         public int TravelTime(int distance, int mass)
         {
             int travelTime;
-            switch(EngineFuel)
+            switch (EngineFuel)
             {
                 // tak bedzie dzialal nasz wymyslony silnik na diesel
                 case Fuel.Diesel:
@@ -65,7 +63,7 @@ namespace B6
                     break;
                 // i wreszcie wodorowy
                 case Fuel.Hydrogen:
-                    int velocity = 600 / (10 + mass); 
+                    int velocity = 600 / (10 + mass);
                     if (velocity < 20) velocity = 20;
                     travelTime = distance / velocity;
                     break;
@@ -83,7 +81,7 @@ namespace B6
             int cost;
             int time = TravelTime(distance, mass);
             // a takze od ceny danego paliwa
-            switch(EngineFuel)
+            switch (EngineFuel)
             {
                 case Fuel.Diesel:
                     cost = time * 100;
