@@ -201,19 +201,16 @@ class App(QWidget):
         layoutNumPad.setSpacing(0)
 
         textStatus.setStyleSheet("font-family: 'Helvetica Light'; font-size:60px; font-weight: 100; padding-right: 10px;")
-        self.buttonStyle = "QPushButton { height: 45%; font-family: 'Helvetica Light'; font-size:30px; font-weight: 300; padding-left: 12px; padding-right: 12px; padding-top: 7px; padding-bottom: 7px; border: 1px solid #2b2d2f;"
+        self.buttonStyle = "QPushButton { text-align: center; height: 45%; font-family: 'Helvetica Light'; font-size:30px; font-weight: 300; padding-left: 12px; padding-right: 12px; padding-top: 7px; padding-bottom: 7px; border: 1px solid #2b2d2f;"
         darkGrey = "background-color: #3f4143; } QPushButton:hover { background-color: #5b5e61 } QPushButton:pressed { background-color: #3f4143 }"
         grey = "background-color: #5f6062; } QPushButton:hover { background-color: #78797d } QPushButton:pressed { background-color: #5f6062 }"
-        orange = "background-color: #ef7a1e; } QPushButton:hover { background-color: #ffac6a } QPushButton:pressed { background-color: #ef7a1e }"
+        orange = "background-color: #ef7a1e; } QPushButton:hover { background-color: #ffac6a } QPushButton:pressed { background-color: #ef7a1e } QPushButton { padding-top: 4px; padding-bottom: 10px; }"
 
         self.buttonMinus.setStyleSheet(self.buttonStyle + orange)
         self.buttonPlus.setStyleSheet(self.buttonStyle + orange)
         self.buttonDivide.setStyleSheet(self.buttonStyle + orange)
         self.buttonTimes.setStyleSheet(self.buttonStyle + orange)
         self.buttonEquals.setStyleSheet(self.buttonStyle + orange)
-
-
-
 
         self.button1.setStyleSheet(self.buttonStyle + grey)
         self.button2.setStyleSheet(self.buttonStyle + grey)
@@ -224,7 +221,7 @@ class App(QWidget):
         self.button7.setStyleSheet(self.buttonStyle + grey)
         self.button8.setStyleSheet(self.buttonStyle + grey)
         self.button9.setStyleSheet(self.buttonStyle + grey)
-        self.button0.setStyleSheet(self.buttonStyle + grey + "text-align: left; padding-left: 28px;")
+        self.button0.setStyleSheet(self.buttonStyle + grey)
         self.buttonC.setStyleSheet(self.buttonStyle + darkGrey)
         self.buttonSign.setStyleSheet(self.buttonStyle + darkGrey)
         self.buttonSqrt.setStyleSheet(self.buttonStyle + darkGrey)
