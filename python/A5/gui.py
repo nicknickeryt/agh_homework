@@ -14,42 +14,47 @@ class App(QWidget):
         self.left = 100
         self.top = 100
         self.width = 300
-        self.height = 300
+        self.height = 400
         self.setWindowTitle(self.title)
         self.setGeometry(self.left, self.top, self.width, self.height)
-        self.setFixedSize(self.size())
+        self.setWindowFlags(Qt.FramelessWindowHint)
+
+        sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
+        sizePolicy.setHeightForWidth(True)
+        self.setSizePolicy(sizePolicy)
+
         self.setAutoFillBackground(True)
         p = self.palette()
         p.setColor(self.backgroundRole(), Qt.white)
         self.setPalette(p)
         
-        button1 = QPushButton('1', self)
-        button2 = QPushButton('2', self)
-        button3 = QPushButton('3', self)
-        button4 = QPushButton('4', self)
-        button5 = QPushButton('5', self)
-        button6 = QPushButton('6', self)
-        button7 = QPushButton('7', self)
-        button8 = QPushButton('8', self)
-        button9 = QPushButton('9', self)
-        button0 = QPushButton('0', self)
+        self.button1 = QPushButton('1', self)
+        self.button2 = QPushButton('2', self)
+        self.button3 = QPushButton('3', self)
+        self.button4 = QPushButton('4', self)
+        self.button5 = QPushButton('5', self)
+        self.button6 = QPushButton('6', self)
+        self.button7 = QPushButton('7', self)
+        self.button8 = QPushButton('8', self)
+        self.button9 = QPushButton('9', self)
+        self.button0 = QPushButton('0', self)
 
-        buttonDot = QPushButton('.', self)
-        buttonSign = QPushButton('±', self)
+        self.buttonDot = QPushButton('.', self)
+        self.buttonSign = QPushButton('±', self)
 
-        buttonPlus = QPushButton('+', self)
-        buttonMinus = QPushButton('-', self)
-        buttonTimes = QPushButton('×', self)
-        buttonDivide = QPushButton('÷', self)
-        buttonSqrt = QPushButton('√', self)
+        self.buttonPlus = QPushButton('+', self)
+        self.buttonMinus = QPushButton('-', self)
+        self.buttonTimes = QPushButton('×', self)
+        self.buttonDivide = QPushButton('÷', self)
+        self.buttonSqrt = QPushButton('√', self)
 
-        buttonEquals = QPushButton('=', self)
-        buttonC = QPushButton('C', self)
+        self.buttonEquals = QPushButton('=', self)
+        self.buttonC = QPushButton('AC', self)
 
         self.opOrg = self.currOp = ''
 
 
-
+        
         def setOperation(operation):
             if textStatus.text() in specialCodes:
                 self.opOrg = "0"
@@ -66,6 +71,8 @@ class App(QWidget):
             textStatus.setText(text1)
 
         def equals():
+            if(self.opOrg == '' or self.currOp == ''): return
+
             curInput = textStatus.text()
             text = doOp(self.currOp, float(self.opOrg), float(curInput))
             if text not in specialCodes and text.is_integer():   text = int(text)
@@ -97,110 +104,176 @@ class App(QWidget):
 
 
 
-        button1.clicked.connect(partial(addInput, 1))
-        button2.clicked.connect(partial(addInput, 2))
-        button3.clicked.connect(partial(addInput, 3))
+        self.button1.clicked.connect(partial(addInput, 1))
+        self.button2.clicked.connect(partial(addInput, 2))
+        self.button3.clicked.connect(partial(addInput, 3))
 
-        button4.clicked.connect(partial(addInput, 4))
-        button5.clicked.connect(partial(addInput, 5))
-        button6.clicked.connect(partial(addInput, 6))
+        self.button4.clicked.connect(partial(addInput, 4))
+        self.button5.clicked.connect(partial(addInput, 5))
+        self.button6.clicked.connect(partial(addInput, 6))
 
-        button7.clicked.connect(partial(addInput, 7))
-        button8.clicked.connect(partial(addInput, 8))
-        button9.clicked.connect(partial(addInput, 9))
+        self.button7.clicked.connect(partial(addInput, 7))
+        self.button8.clicked.connect(partial(addInput, 8))
+        self.button9.clicked.connect(partial(addInput, 9))
 
-        button0.clicked.connect(partial(addInput, 0))
+        self.button0.clicked.connect(partial(addInput, 0))
 
-        buttonC.clicked.connect(partial(simpleFn, ops.CLEAR))
-        buttonSqrt.clicked.connect(partial(simpleFn, ops.SQRT))
-        buttonSign.clicked.connect(partial(simpleFn, ops.SIGN))
-        buttonDot.clicked.connect(partial(simpleFn, ops.DOT))
+        self.buttonC.clicked.connect(partial(simpleFn, ops.CLEAR))
+        self.buttonSqrt.clicked.connect(partial(simpleFn, ops.SQRT))
+        self.buttonSign.clicked.connect(partial(simpleFn, ops.SIGN))
+        self.buttonDot.clicked.connect(partial(simpleFn, ops.DOT))
 
 
-        buttonTimes.clicked.connect(partial(setOperation, ops.TIMES))
-        buttonDivide.clicked.connect(partial(setOperation, ops.DIVISION))
-        buttonPlus.clicked.connect(partial(setOperation, ops.ADDITION))
-        buttonMinus.clicked.connect(partial(setOperation, ops.MINUS))
-        buttonEquals.clicked.connect(equals)
+        self.buttonTimes.clicked.connect(partial(setOperation, ops.TIMES))
+        self.buttonDivide.clicked.connect(partial(setOperation, ops.DIVISION))
+        self.buttonPlus.clicked.connect(partial(setOperation, ops.ADDITION))
+        self.buttonMinus.clicked.connect(partial(setOperation, ops.MINUS))
+        self.buttonEquals.clicked.connect(equals)
+
+        def toggleMaximize():
+            if(self.isMaximized()):
+                self.showNormal()
+            else:
+                self.showMaximized()
+
+        topButtonStyle = "QPushButton { border-radius: 8px; "
+        self.buttonClose = QPushButton('', self)
+        self.buttonMinimize = QPushButton('', self)
+        self.buttonMaximize = QPushButton('', self)
+        self.buttonClose.clicked.connect(exit)
+        self.buttonMinimize.clicked.connect(self.showMinimized)
+        self.buttonMaximize.clicked.connect(toggleMaximize)
+
+
+        self.buttonClose.setFixedSize(16, 16)
+        self.buttonMinimize.setFixedSize(16, 16)
+        self.buttonMaximize.setFixedSize(16, 16)
+        self.buttonClose.setStyleSheet(topButtonStyle + "background-color: #ff5a52 }" + "QPushButton:hover { background-color: #9b3631 }")
+        self.buttonMinimize.setStyleSheet(topButtonStyle + "background-color: #e6c029 }" + "QPushButton:hover { background-color: #8d7619 }")
+        self.buttonMaximize.setStyleSheet(topButtonStyle + "background-color: #52c22b }" + "QPushButton:hover { background-color: #3a881f }")
+
+        layoutTopBar = QHBoxLayout()
+        layoutTopBar.addWidget(self.buttonClose)
+        layoutTopBar.addWidget(self.buttonMinimize)
+        layoutTopBar.addWidget(self.buttonMaximize)
+        verticalSpacer = QSpacerItem(200, 35, QSizePolicy.Expanding, QSizePolicy.Fixed)
+        layoutTopBar.addItem(verticalSpacer)
+        layoutTopBar.setContentsMargins(10, 0, 0, 0)
+        layoutTopBar.setSpacing(7)
+
+
 
 
         textStatus = QLabel()
         textStatus.setText("0")
-        textStatus.setFont(QFont("Arial", 20))
+        textStatus.setFont(QFont("Helvetica", 20))
         textStatus.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
 
-        layout2 = QVBoxLayout()
-        layout2.addWidget(textStatus)
-
-
-        layoutTopFn = QHBoxLayout()
-
-        layoutTopFn.addWidget(buttonC)
-        layoutTopFn.addWidget(buttonSign)
-        layoutTopFn.addWidget(buttonSqrt)
-        layoutTopFn.addWidget(buttonDivide)
+        layoutText = QVBoxLayout()
+        layoutText.addWidget(textStatus)
 
         layoutNumPad = QGridLayout()
-        layoutNumPad.addWidget(button7, 0, 0)
-        layoutNumPad.addWidget(button8, 0, 1)
-        layoutNumPad.addWidget(button9, 0, 2)
-        layoutNumPad.addWidget(buttonTimes, 0, 3)
 
-        layoutNumPad.addWidget(button4, 1, 0)
-        layoutNumPad.addWidget(button5, 1, 1)
-        layoutNumPad.addWidget(button6, 1, 2)
-        layoutNumPad.addWidget(buttonMinus, 1, 3)
+        layoutNumPad.addWidget(self.buttonC, 0, 0)
+        layoutNumPad.addWidget(self.buttonSign, 0, 1)
+        layoutNumPad.addWidget(self.buttonSqrt, 0, 2)
+        layoutNumPad.addWidget(self.buttonDivide, 0, 3)
 
-        layoutNumPad.addWidget(button1, 2, 0)
-        layoutNumPad.addWidget(button2, 2, 1)
-        layoutNumPad.addWidget(button3, 2, 2)
-        layoutNumPad.addWidget(buttonPlus, 2, 3)
+        layoutNumPad.addWidget(self.button7, 1, 0)
+        layoutNumPad.addWidget(self.button8, 1, 1)
+        layoutNumPad.addWidget(self.button9, 1, 2)
+        layoutNumPad.addWidget(self.buttonTimes, 1, 3)
 
-        layoutNumPad.addWidget(button0, 3, 0, 1, 2)
-        layoutNumPad.addWidget(buttonDot, 3, 2)
-        layoutNumPad.addWidget(buttonEquals, 3, 3)
+        layoutNumPad.addWidget(self.button4, 2, 0)
+        layoutNumPad.addWidget(self.button5, 2, 1)
+        layoutNumPad.addWidget(self.button6, 2, 2)
+        layoutNumPad.addWidget(self.buttonMinus, 2, 3)
+
+        layoutNumPad.addWidget(self.button1, 3, 0)
+        layoutNumPad.addWidget(self.button2, 3, 1)
+        layoutNumPad.addWidget(self.button3, 3, 2)
+        layoutNumPad.addWidget(self.buttonPlus, 3, 3)
+
+        layoutNumPad.addWidget(self.button0, 4, 0, 1, 2)
+        layoutNumPad.addWidget(self.buttonDot, 4, 2)
+        layoutNumPad.addWidget(self.buttonEquals, 4, 3)
 
         layoutNumPad.setSpacing(0)
-        buttonMinus.setStyleSheet("font-size:40px;background-color:#ef7a1e; border: 1px solid #3d3d3d")
-        buttonPlus.setStyleSheet("font-size:40px;background-color:#ef7a1e; border: 1px solid #3d3d3d")
-        buttonDivide.setStyleSheet("font-size:40px;background-color:#ef7a1e; border: 1px solid #3d3d3d")
-        buttonTimes.setStyleSheet("font-size:40px;background-color:#ef7a1e; border: 1px solid #3d3d3d")
-        buttonEquals.setStyleSheet("font-size:40px;background-color:#ef7a1e; border: 1px solid #3d3d3d")
-        buttonEquals.setFixedSize(50, 50)
-        buttonDivide.setFixedSize(50, 50)
 
-        button1.setFixedSize(50, 50)
-        button2.setFixedSize(50, 50)
-        button3.setFixedSize(50, 50)
-        button4.setFixedSize(50, 50)
-        button5.setFixedSize(50, 50)
-        button6.setFixedSize(50, 50)
-        button7.setFixedSize(50, 50)
-        button8.setFixedSize(50, 50)
-        button9.setFixedSize(50, 50)
-        buttonDot.setFixedSize(50, 50)
-        button0.setFixedSize(100, 50)
+        textStatus.setStyleSheet("font-family: 'Helvetica Light'; font-size:60px; font-weight: 100; padding-right: 10px;")
+        self.buttonStyle = "QPushButton { height: 45%; font-family: 'Helvetica Light'; font-size:30px; font-weight: 300; padding-left: 12px; padding-right: 12px; padding-top: 7px; padding-bottom: 7px; border: 1px solid #2b2d2f;"
+        darkGrey = "background-color: #3f4143; } QPushButton:hover { background-color: #5b5e61 } QPushButton:pressed { background-color: #3f4143 }"
+        grey = "background-color: #5f6062; } QPushButton:hover { background-color: #78797d } QPushButton:pressed { background-color: #5f6062 }"
+        orange = "background-color: #ef7a1e; } QPushButton:hover { background-color: #ffac6a } QPushButton:pressed { background-color: #ef7a1e }"
 
-        button1.setStyleSheet("font-size:40px;background-color:#4f4f4f; border: 1px solid #3d3d3d")
-        button2.setStyleSheet("font-size:40px;background-color:#4f4f4f; border: 1px solid #3d3d3d")
-        button3.setStyleSheet("font-size:40px;background-color:#4f4f4f; border: 1px solid #3d3d3d")
-        button4.setStyleSheet("font-size:40px;background-color:#4f4f4f; border: 1px solid #3d3d3d")
-        button5.setStyleSheet("font-size:40px;background-color:#4f4f4f; border: 1px solid #3d3d3d")
+        self.buttonMinus.setStyleSheet(self.buttonStyle + orange)
+        self.buttonPlus.setStyleSheet(self.buttonStyle + orange)
+        self.buttonDivide.setStyleSheet(self.buttonStyle + orange)
+        self.buttonTimes.setStyleSheet(self.buttonStyle + orange)
+        self.buttonEquals.setStyleSheet(self.buttonStyle + orange)
+
+
+
+
+        self.button1.setStyleSheet(self.buttonStyle + grey)
+        self.button2.setStyleSheet(self.buttonStyle + grey)
+        self.button3.setStyleSheet(self.buttonStyle + grey)
+        self.button4.setStyleSheet(self.buttonStyle + grey)
+        self.button5.setStyleSheet(self.buttonStyle + grey)
+        self.button6.setStyleSheet(self.buttonStyle + grey)
+        self.button7.setStyleSheet(self.buttonStyle + grey)
+        self.button8.setStyleSheet(self.buttonStyle + grey)
+        self.button9.setStyleSheet(self.buttonStyle + grey)
+        self.button0.setStyleSheet(self.buttonStyle + grey + "text-align: left; padding-left: 28px;")
+        self.buttonC.setStyleSheet(self.buttonStyle + darkGrey)
+        self.buttonSign.setStyleSheet(self.buttonStyle + darkGrey)
+        self.buttonSqrt.setStyleSheet(self.buttonStyle + darkGrey)
+        self.buttonDot.setStyleSheet(self.buttonStyle + grey)
 
         layout = QVBoxLayout()
-        layout.addLayout(layout2)
-        layout.addLayout(layoutTopFn)
+
+        layoutNumPad.setContentsMargins(0, 0, 0, 0)
+        layout.setContentsMargins(0, 0, 0, 0)
+        layoutNumPad.setSpacing(0)
+
+        layout.addLayout(layoutTopBar)
+        layout.addLayout(layoutText)
         layout.addLayout(layoutNumPad)
 
-        
-        layoutTopFn.setContentsMargins(0, 0, 0, 0)
-        layoutNumPad.setContentsMargins(0, 0, 0, 0)
 
-        self.setStyleSheet("background-color: #4f4f4f; color: #fff")
+        self.setStyleSheet("background-color: #2b2d2f; color: #fff")
 
         self.setLayout(layout)
         self.show()
         
+    
+    def keyPressEvent(self, e):
+        match(e.key()):
+            case Qt.Key_1:
+                self.button1.click()
+            case Qt.Key_2:
+                self.button2.click()
+            case Qt.Key_3:
+                self.button3.click()
+            case Qt.Key_4:
+                self.button4.click()
+            case Qt.Key_5:
+                self.button5.click()
+            case Qt.Key_6:
+                self.button6.click()
+            case Qt.Key_7:
+                self.button7.click()
+            case Qt.Key_8:
+                self.button8.click()
+            case Qt.Key_9:
+                self.button9.click()
+            case Qt.Key_0:
+                self.button0.click()
+            case Qt.Key_Period:
+                self.buttonDot.click()
+            case Qt.Key_C:
+                self.buttonC.click()
+
 app = QApplication(sys.argv)
 ex = App()
 app.exec()
