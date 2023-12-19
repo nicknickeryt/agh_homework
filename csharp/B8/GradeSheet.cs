@@ -5,29 +5,29 @@ using System.Text.Json;
 namespace B8
 {
 
-    public enum Grupa
+    public enum StudentGroup
     {
-        GRUPA_1,
-        GRUPA_2,
-        GRUPA_3
+        GROUP_1,
+        GROUP_2,
+        GROUP_3
     }
     class GradeSheet
     {
+        private static string errorCode = "Deserialize » Cannot access file.";
         private JsonSerializerOptions opts = new JsonSerializerOptions() { WriteIndented = true };
         public string NameSurname { get; set; }
-        public Grupa Group { get; set; }
+        public StudentGroup Group { get; set; }
 
         public Dictionary<string, float> GradeDictionary { get; set; }
 
         public double AverageGrade()
         {
             double sum = 0;
-            int n = GradeDictionary.Count;
             foreach (KeyValuePair<string, float> kvp in GradeDictionary)
             {
                 sum += kvp.Value;
             }
-            return sum / n;
+            return sum / GradeDictionary.Count;
         }
 
         public void Serialize(string filePath)
@@ -39,7 +39,7 @@ namespace B8
             }
             catch (Exception)
             {
-                Console.WriteLine("Nie ma takiego pliku lub nie jest dostępny.");
+                Console.WriteLine(errorCode);
             }
         }
 
@@ -50,7 +50,7 @@ namespace B8
                 GradeSheet gradesFromJson = JsonSerializer.Deserialize<GradeSheet>(jsonFromFile);
                 return gradesFromJson;
             } catch (Exception) {
-                Console.WriteLine("Nie ma takiego pliku lub nie jest dostępny.");
+                Console.WriteLine(errorCode);
             }
             return null;
         }
